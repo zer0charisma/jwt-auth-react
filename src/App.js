@@ -1,23 +1,34 @@
-import logo from './logo.svg';
 import './App.css';
+import { Navigate, Routes, Route, BrowserRouter as Router } from "react-router-dom";
+import Protected from "./Protected"
+import Navbar from "./Navbar"
+import Login from "./Login"
+import Profile from "./Profile"
+
+import {authToken} from './authToken'
+import { createBrowserHistory } from 'history';
 
 function App() {
+  const history = createBrowserHistory();
+  const token = localStorage.getItem("token");
+  if (token) {
+      // set the authorization token
+      authToken(token);
+  }
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Router history={history}>
+      <Navbar />
+      <Routes>
+       <Route path='/profile' element={
+         <Protected>
+           <Profile />
+         </Protected>
+       }
+       />
+       <Route path='/' element={<Login />} />
+       </Routes>
+      </Router>
     </div>
   );
 }
