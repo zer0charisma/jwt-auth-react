@@ -10,8 +10,6 @@ function Login() {
     .then(response => {
       const token = response.data.token;
       localStorage.setItem("token", token);
-      authToken(token);
-      window.location.href = '/profile'
     })
     .catch(err => console.log(err));
   };

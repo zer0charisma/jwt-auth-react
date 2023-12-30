@@ -8,3 +8,5 @@ export const authToken = token => {
     delete axios.defaults.headers.common["Authorization"];
   }
 }
+
+
